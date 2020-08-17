@@ -41,7 +41,7 @@ function ChannelController({ layerId, channelIndex }: ChannelConfig) {
 
   const { channel_axis, names } = sourceInfo[layerId];
   const selection = loaderSelection[channelIndex];
-  const nameIndex = channel_axis ? selection[channel_axis] : 0;
+  const nameIndex = Number.isInteger(channel_axis) ? selection[channel_axis as number] : 0;
   const label = names[nameIndex];
   return (
     <>

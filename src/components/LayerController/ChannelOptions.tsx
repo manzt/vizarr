@@ -100,8 +100,8 @@ function ChannelOptions({ layerId, channelIndex }: { layerId: string; channelInd
     setLayer((prev) => {
       const loaderSelection = [...prev.layerProps.loaderSelection];
       const channelSelection = [...loaderSelection[channelIndex]];
-      if (channel_axis) {
-        channelSelection[channel_axis] = +event.target.value;
+      if (Number.isInteger(channel_axis)) {
+        channelSelection[channel_axis as number] = +event.target.value;
         loaderSelection[channelIndex] = channelSelection;
       }
       return { ...prev, layerProps: { ...prev.layerProps, loaderSelection } };

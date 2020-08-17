@@ -28,13 +28,9 @@ function loadMultiChannel(config: MultichannelConfig, loader: ZarrLoader, max: n
   let { contrast_limits, visibilities, colors } = config;
   const { base } = loader;
 
-  if (!channel_axis) {
-    throw Error('Must specify channel_axis if attempting to load multichannel array.');
-  }
-
-  const n = base.shape[channel_axis];
+  const n = base.shape[channel_axis as number];
   for (const channelProp of [contrast_limits, visibilities, names, colors]) {
-    if (channelProp?.length !== n) {
+    if (channelProp && channelProp.length !== n) {
       const propertyName = Object.keys({ channelProp })[0];
       throw Error(`channel_axis is length ${n} and provided channel_axis property ${propertyName} is different size.`);
     }
@@ -70,11 +66,10 @@ function loadMultiChannel(config: MultichannelConfig, loader: ZarrLoader, max: n
       }
     }
   }
-
   return {
     loader,
     name,
-    channel_axis,
+    channel_axis: channel_axis as number,
     colors,
     names: names ?? range(n).map((i) => `channel_${i}`),
     contrast_limits: contrast_limits ?? Array(n).fill([0, max]),
@@ -179,7 +174,7 @@ export async function createSourceData(config: ImageLayerConfig): Promise<Source
   // Now that we have data, try to figure out how to render initially.
 
   const nDims = base.shape.length;
-  if (nDims === 2 || (!config.channel_axis && !rootAttrs?.omero)) {
+  if (nDims === 2 || (config.channel_axis === undefined && !rootAttrs?.omero)) {
     return loadSingleChannel(config as SingleChannelConfig, loader, max);
   }
 
@@ -207,9 +202,9 @@ export function initLayerStateFromSource(sourceData: SourceData, layerId: string
 
   const visibleIndices = visibilities.flatMap((bool, i) => (bool ? i : []));
   for (const index of visibleIndices) {
-    if (channel_axis) {
+    if (Number.isInteger(channel_axis)) {
       const channelSelection = [...selection];
-      channelSelection[channel_axis] = index;
+      channelSelection[channel_axis as number] = index;
       loaderSelection.push(channelSelection);
     } else {
       loaderSelection.push(selection);

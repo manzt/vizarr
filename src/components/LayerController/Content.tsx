@@ -24,7 +24,7 @@ function Content({ layerId, nChannels }: { layerId: string; nChannels: number })
             <Grid item xs={3}>
               <Typography variant="caption">opacity:</Typography>
             </Grid>
-            <Grid xs={8}>
+            <Grid item xs={8}>
               <OpacitySlider layerId={layerId} />
             </Grid>
           </Grid>
@@ -34,7 +34,7 @@ function Content({ layerId, nChannels }: { layerId: string; nChannels: number })
           <Grid item xs={3}>
             <Typography variant="caption">channels:</Typography>
           </Grid>
-          <Grid xs={1}>
+          <Grid item xs={1}>
             <AddChannelButton layerId={layerId} />
           </Grid>
         </Grid>
