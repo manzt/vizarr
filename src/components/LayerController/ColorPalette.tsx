@@ -5,12 +5,10 @@ import { COLORS, hexToRGB } from '../../utils';
 
 const useStyles = makeStyles(() => ({
   container: {
-    width: '70px',
-    height: '40px',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    flexWrap: 'wrap',
+    padding: '2px',
   },
   button: {
     padding: '3px',

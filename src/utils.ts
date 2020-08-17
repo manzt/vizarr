@@ -10,7 +10,6 @@ export const COLORS = {
   green: '#00FF00',
   blue: '#0000FF',
   white: '#FFFFFF',
-  orange: '#FFA500',
 };
 export const MAGENTA_GREEN = [COLORS.magenta, COLORS.green];
 export const RGB = [COLORS.red, COLORS.green, COLORS.blue];
