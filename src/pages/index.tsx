@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 
-import { Button } from '@material-ui/core';
+import { Button, ButtonGroup } from '@material-ui/core';
 
 import { version as vizarrVersion } from '../../package.json';
 import { layerIdsState, sourceInfoState, viewerViewState } from '../state';
@@ -17,11 +17,15 @@ type ImjoyButtonConfig = {
   callback: () => void;
 };
 
-function CallbackButton({ config }: { config: ImjoyButtonConfig }): JSX.Element {
+function CallbackButtons({ configs }: { configs: ImjoyButtonConfig[] }): JSX.Element {
   return (
-    <Button onClick={config.callback} style={{ position: 'absolute', right: 4, zIndex: 3 }}>
-      {config.label}
-    </Button>
+    <ButtonGroup style={{ position: 'absolute', right: 4, zIndex: 3 }}>
+      {configs.map((c, i) => (
+        <Button onClick={() => c.callback()} key={c.label + i}>
+          {c.label}
+        </Button>
+      ))}
+    </ButtonGroup>
   );
 }
 
@@ -30,7 +34,7 @@ function App() {
   const setViewState = useSetRecoilState(viewerViewState);
   const setLayerIds = useSetRecoilState(layerIdsState);
   const setSourceInfo = useSetRecoilState(sourceInfoState);
-  const [buttonConfig, setButtonConfig] = useState<null | ImjoyButtonConfig>(null);
+  const [buttonConfigs, setButtonConfigs] = useState<ImjoyButtonConfig[]>([]);
 
   async function addImage(config: ImageLayerConfig) {
     const { createSourceData } = await import('../io');
@@ -63,7 +67,7 @@ function App() {
       const add_image = async (props: ImageLayerConfig) => addImage(props);
       const set_view_state = async (vs: { zoom: number; target: number[] }) => setViewState(vs);
       const clear_view = async () => setLayerIds([]);
-      const create_button = async (config: ImjoyButtonConfig) => setButtonConfig(config);
+      const create_button = async (config: ImjoyButtonConfig) => setButtonConfigs((prev) => [...prev, config]);
       api.export({ add_image, set_view_state, clear_view, create_button });
     }
     // enable imjoy api when loaded as an iframe
@@ -74,7 +78,7 @@ function App() {
 
   return (
     <>
-      {buttonConfig && <CallbackButton config={buttonConfig} />}
+      {buttonConfigs.length > 0 && <CallbackButtons configs={buttonConfigs} />}
       <Menu />
       <Viewer />
     </>
