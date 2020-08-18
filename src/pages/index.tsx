@@ -62,9 +62,9 @@ function App() {
       });
       const add_image = async (props: ImageLayerConfig) => addImage(props);
       const set_view_state = async (vs: { zoom: number; target: number[] }) => setViewState(vs);
-      const clear = async () => setLayerIds([]);
+      const clear_view = async () => setLayerIds([]);
       const create_button = async (config: ImjoyButtonConfig) => setButtonConfig(config);
-      api.export({ add_image, set_view_state, clear, create_button });
+      api.export({ add_image, set_view_state, clear_view, create_button });
     }
     // enable imjoy api when loaded as an iframe
     if (window.self !== window.top) {
