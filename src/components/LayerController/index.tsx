@@ -30,7 +30,7 @@ const Accordion = withStyles({
   },
 })(MuiAccordion);
 
-function LayerController({ layerId }: { layerId: string }) {
+function LayerController({ layerId }: { layerId: string }): JSX.Element {
   const sourceInfo = useRecoilValue(sourceInfoState);
   const [layer, setLayer] = useRecoilState(layerStateFamily(layerId));
 

@@ -22,7 +22,7 @@ export async function getJson(store: HTTPStore, key: string) {
   return json;
 }
 
-export function normalizeStore(store: string | HTTPStore) {
+export function normalizeStore(store: string | HTTPStore): HTTPStore {
   if (typeof store === 'string') {
     return new HTTPStore(store);
   }

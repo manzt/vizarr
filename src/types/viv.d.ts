@@ -66,7 +66,7 @@ declare module 'viv' {
   };
 
   export class ImageLayer extends Layer {
-    construtor(
+    constructor(
       props: VivLayerProps & {
         z?: number;
         translate?: number[];

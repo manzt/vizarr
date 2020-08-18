@@ -15,7 +15,7 @@ const DenseInput = withStyles({
   },
 })(Input);
 
-function ChannelOptions({ layerId, channelIndex }: { layerId: string; channelIndex: number }) {
+function ChannelOptions({ layerId, channelIndex }: { layerId: string; channelIndex: number }): JSX.Element {
   const sourceInfo = useRecoilValue(sourceInfoState);
   const [layer, setLayer] = useRecoilState(layerStateFamily(layerId));
   const [anchorEl, setAnchorEl] = useState<null | Element>(null);

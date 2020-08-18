@@ -29,7 +29,7 @@ const useStyles = makeStyles({
   },
 });
 
-function Menu() {
+function Menu(): JSX.Element {
   const layerIds = useRecoilValue(layerIdsState);
   const [hidden, toggle] = useReducer((v) => !v, false);
   const classes = useStyles();

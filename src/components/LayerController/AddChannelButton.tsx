@@ -2,13 +2,12 @@ import { useState } from 'react';
 import type { MouseEvent, ChangeEvent } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { IconButton, Popover, Paper, Typography, Divider, NativeSelect } from '@material-ui/core';
-import { withStyles } from '@material-ui/styles';
 import { Add } from '@material-ui/icons';
 
 import { layerStateFamily, sourceInfoState } from '../../state';
 import { hexToRGB, MAX_CHANNELS } from '../../utils';
 
-function AddChannelButton({ layerId }: { layerId: string }) {
+function AddChannelButton({ layerId }: { layerId: string }): JSX.Element {
   const sourceInfo = useRecoilValue(sourceInfoState);
   const [layer, setLayer] = useRecoilState(layerStateFamily(layerId));
   const [anchorEl, setAnchorEl] = useState<null | Element>(null);

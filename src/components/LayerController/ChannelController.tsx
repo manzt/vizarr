@@ -11,11 +11,11 @@ interface ChannelConfig {
   channelIndex: number;
 }
 
-function ChannelController({ layerId, channelIndex }: ChannelConfig) {
+function ChannelController({ layerId, channelIndex }: ChannelConfig): JSX.Element {
   const sourceInfo = useRecoilValue(sourceInfoState);
   const [layer, setLayer] = useRecoilState(layerStateFamily(layerId));
 
-  const handleContrastChange = (_: ChangeEvent<{}>, v: number | number[]) => {
+  const handleContrastChange = (_: ChangeEvent<unknown>, v: number | number[]) => {
     setLayer((prev) => {
       const sliderValues = [...prev.layerProps.sliderValues];
       sliderValues[channelIndex] = v as number[];

@@ -15,7 +15,7 @@ const Details = withStyles({
   },
 })(AccordionDetails);
 
-function Content({ layerId, nChannels }: { layerId: string; nChannels: number }) {
+function Content({ layerId, nChannels }: { layerId: string; nChannels: number }): JSX.Element {
   return (
     <Details>
       <Grid container direction="column">

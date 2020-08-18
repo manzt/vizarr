@@ -5,7 +5,7 @@ import { Visibility, VisibilityOff } from '@material-ui/icons';
 
 import { layerStateFamily } from '../../state';
 
-function LayerVisibilityButton({ layerId }: { layerId: string }) {
+function LayerVisibilityButton({ layerId }: { layerId: string }): JSX.Element {
   const [layer, setLayer] = useRecoilState(layerStateFamily(layerId));
   const toggle = (event: MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();

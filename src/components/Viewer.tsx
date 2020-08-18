@@ -6,7 +6,7 @@ import type { Layer } from '@deck.gl/core';
 import { viewerViewState, layersSelector } from '../state';
 import type { VivLayerProps, ZarrLoader } from 'viv';
 
-function WrappedViewStateDeck({ layers }: { layers: Layer<VivLayerProps>[] }) {
+function WrappedViewStateDeck({ layers }: { layers: Layer<VivLayerProps>[] }): JSX.Element {
   const [viewState, setViewState] = useRecoilState(viewerViewState);
 
   // If viewState hasn't been updated, use the first loader to guess viewState
@@ -26,7 +26,7 @@ function WrappedViewStateDeck({ layers }: { layers: Layer<VivLayerProps>[] }) {
   );
 }
 
-function Viewer() {
+function Viewer(): JSX.Element {
   const layerConstructors = useRecoilValue(layersSelector);
   const layers = layerConstructors.map((l) => {
     // Something weird with Recoil Loadable here. Need to cast to any.
