@@ -16,14 +16,21 @@ export const RGB = [COLORS.red, COLORS.green, COLORS.blue];
 export const CYMRGB = Object.values(COLORS).slice(0, -2);
 
 export async function getJson(store: HTTPStore, key: string) {
-  const bytes = new Uint8Array(await store.getItem(key));
+  const res = await store.getItem(key);
+  if (({}).constructor == res.constructor) {
+    return res
+  }
+  const bytes = new Uint8Array(res);
   const decoder = new TextDecoder('utf-8');
   const json = JSON.parse(decoder.decode(bytes));
   return json;
 }
 
-export function normalizeStore(store: string | HTTPStore): HTTPStore {
+export async function normalizeStore(store: string | HTTPStore): Promise<HTTPStore> {
   if (typeof store === 'string') {
+    if (store.includes('store')) {
+      return (await import(store)).default as HTTPStore;
+    }
     return new HTTPStore(store);
   }
   return store;

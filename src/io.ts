@@ -164,7 +164,7 @@ export async function createSourceData(config: ImageLayerConfig): Promise<Source
   let data: ZarrArray[];
   let rootAttrs: RootAttrs | undefined;
 
-  const store = normalizeStore(source);
+  const store = await normalizeStore(source);
   if (await store.containsItem('.zgroup')) {
     try {
       const res = await openRootGroup(store);
