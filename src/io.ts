@@ -23,7 +23,7 @@ function getAxisLabels(config: SingleChannelConfig | MultichannelConfig, loader:
   let { axis_labels } = config;
   if (!axis_labels || axis_labels.length != loader.base.shape.length) {
     // default axis_labels are e.g. ['0', '1', 'y', 'x']
-    const nonXYaxisLabels = loader.base.shape.slice(0, -2).map((d, i) => '' + i);
+    const nonXYaxisLabels = loader.base.shape.slice(0, -2).map((_, i) => '' + i);
     axis_labels = nonXYaxisLabels.concat(['y', 'x']);
   }
   return axis_labels;
