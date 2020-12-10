@@ -46,6 +46,7 @@ declare module '@hms-dbmi/viv' {
     readonly tileSize: number;
     readonly dtype: SupportedDtype;
     readonly base: ZarrArray;
+    readonly _data: ZarrArray[];
 
     getTile(selection: TileSelection): Promise<SelectionData>;
     getRaster(selection: RasterSelection): Promise<SelectionData>;
