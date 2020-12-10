@@ -18,6 +18,7 @@ import {
   rstrip,
 } from './utils';
 import GridLayer from './gridLayer';
+import MultiScaleRGBLayer from './rgbaLayer';
 
 function getAxisLabels(config: SingleChannelConfig | MultichannelConfig, loader: ZarrLoader): string[] {
   let { axis_labels } = config;
@@ -117,6 +118,10 @@ export function createLoader(dataArr: ZarrArray[]) {
   // If base image is small, we don't need to fetch data for the
   // top levels of the pyramid. For large images, the tile sizes (chunks)
   // will be the same size for x/y. We check the chunksize here for this edge case.
+  if (dataArr[0].shape[dataArr[0].shape.length - 1] === 4) {
+    const dimensions = ['y', 'x', 'c'].map((field) => ({ field }));
+    return new ZarrLoader({ data: dataArr, dimensions });
+  }
   const base = dataArr[0];
   const { chunks, shape } = base;
   const [tileHeight, tileWidth] = chunks.slice(-2);
@@ -258,6 +263,8 @@ export function initLayerStateFromSource(sourceData: SourceData, layerId: string
   };
 }
 
-function getLayer(sourceData: SourceData): ImageLayer | MultiscaleImageLayer {
-  return sourceData.loaders ? GridLayer : sourceData.loader.numLevels > 1 ? MultiscaleImageLayer : ImageLayer;
+function getLayer({ loader, loaders }: SourceData): ImageLayer | MultiscaleImageLayer {
+  if (loaders) return GridLayer;
+  if (loader.isRgb) return MultiScaleRGBLayer;
+  return loader.numLevels > 1 ? MultiscaleImageLayer : ImageLayer;
 }

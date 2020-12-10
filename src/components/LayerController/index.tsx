@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import MuiAccordion from '@material-ui/core/Accordion';
 import { withStyles } from '@material-ui/styles';
+import MuliscaleRGBALayer from '../../rgbaLayer';
 
 import { sourceInfoState, layerStateFamily } from '../../state';
 import type { SourceData } from '../../state';
@@ -52,7 +53,7 @@ function LayerController({ layerId }: { layerId: string }): JSX.Element {
   return (
     <Accordion defaultExpanded>
       <Header layerId={layerId} name={name} />
-      <Content layerId={layerId} nChannels={nChannels} />
+      {layer.layerProps?.loader?.isRgb ? null : <Content layerId={layerId} nChannels={nChannels} />}
     </Accordion>
   );
 }
